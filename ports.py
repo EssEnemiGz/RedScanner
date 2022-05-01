@@ -16,20 +16,23 @@ class main:
 
         if portRange > 65535:
             portRange = 65535
-
+        
         try:
             print(f"\033[1;32m-> Escaneando puertos con TCP... \033[0m")
             verification = 0
+            
             for port in range(portRange):
                 try:
                     s = socket(AF_INET, SOCK_STREAM)
                     s.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
+                    s.settimeout(0.3)
                     s.connect( (host, port) )
                     s.close()
                     dispo.append(port)
 
                     print(f"\033[1;31m Puerto disponible -> {dispo[verification]} \033[0m")
                     verification += 1
+                
                 except OSError:
                     close.append(port)
 
